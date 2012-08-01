@@ -3,7 +3,8 @@ div '.reveal', ->
   div '.slides', ->
     section ->
       h1 'Exercise 5'
-      img src: 'http://charlestoncodes.jpg.to', style: 'padding:20px;'
+      a href: '/#/1', ->
+        img src: 'http://charlestoncodes.jpg.to', style: 'padding:20px;'
       script '''
         // Delicously hacky. Look away.
         if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
@@ -114,6 +115,15 @@ div '.reveal', ->
         git add .
         git commit -am "show story"
         '''
+      section ->
+        h1 'Finished Exercise 5'
+        a href: '/#/1', ->
+          img src: 'http://charlestoncodes.jpg.to', style: 'padding:20px;'
+        script '''
+          // Delicously hacky. Look away.
+          if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );
+        '''
+  
   comment 'The navigational controls UI'
   aside '.controls', ->
     a '.left', href: '#', '&#x25C4;'

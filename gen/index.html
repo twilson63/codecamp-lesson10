@@ -21,6 +21,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+  <link rel="shortcut icon" href="/img/favicon.ico">
+  
   <!-- CSS
   ================================================== -->
   <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -35,21 +37,158 @@
 <body>
   <!-- Primary Page Layout
   ================================================== -->
-  <div class="reveal"><div class="state-background"></div><div class="slides"><section><h1>Reveal.js</h1><h3 class="inverted">CSS 3D Presentations</h3><script>// Delicously hacky. Look away.
-if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );</script></section><section><section><h1>Hello</h1><h3 class="inverted">CSS 3D Presentations</h3></section><section><h1>World</h1><h3 class="inverted">CSS 3D Presentations</h3></section></section><section><h2>Code</h2><pre><code class="contenteditable">function linkify( selector ) {
-  if( supports3DTransforms ) {
+  <div class="reveal"><div class="state-background"></div><div class="slides"><section><h1>Lesson 11</h1><img src="http://charlestoncodes.jpg.to" style="padding:20px;" /><script>// Delicously hacky. Look away.
+if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );</script><h3>Final Lesson</h3></section><section><h1>Review</h1><h3>Revisit HackerCourses</h3></section><section><h1>Hacker Courses</h1><h3>Build and Deploy a working web application that allows users to create 
+courses and vote up or down the courses they want to take.</h3></section><section><section><h1>Setup</h1><h3>Create app new called "hackercourses"</h3></section><section><h1>Code</h1><pre><code class="contenteditable">cd ~/rails
+rvm use 1.9.3
+rails new hackercourses
+cd hackercourses</code></pre></section></section><section><section><h1>Install Thin Gem</h1><h3>Add "thin" to the top your Gemfile</h3><h3>Bundle Install</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'thin'</code></pre><h3>Install Thin</h3><pre><code class="contenteditable">bundle install</code></pre></section></section><section><section><h1>Devise Gem</h1><h3>Add "devise" to your Gemfile</h3><h3>Bundle Install and Install Devise</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'devise'</code></pre><h3>Install Devise</h3><pre><code class="contenteditable">bundle install
+rails g devise:install</code></pre><h3>Follow the instructions from the devise generator</h3></section></section><section><section><h1>Install RSpec Gem</h1><h3>Add "rspec-rails" to your Gemfile test group</h3><h3>Bundle Install and Install RSpec</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'rspec-rails', :group => :test</code></pre><h3>Install RSpec</h3><pre><code class="contenteditable">bundle install
+rails g rspec:install</code></pre></section></section><section><section><h1>Install Cucumber Gem</h1><h3>Add "cucumber-rails" to your Gemfile test group</h3><h3>Bundle Install and Install Cucumber</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'cucumber-rails', :group => :test</code></pre><h3>Install Cucumber</h3><pre><code class="contenteditable">bundle install
+rails g cucumber:install</code></pre></section></section><section><section><h1>Install DatabaseCleaner Gem</h1><h3>Add "database_cleaner" to your Gemfile test group</h3><h3>Bundle Install</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'database_cleaner', :group => :test</code></pre><h3>Install DatabaseCleaner</h3><pre><code class="contenteditable">bundle install</code></pre></section></section><section><section><h1>Install Twitter Bootstrap Gem</h1><h3>Add "twitter-bootstrap-rails" to your Gemfile</h3><h3>Bundle Install and Install Bootstrap</h3></section><section><h1>Code</h1><h3>edit /Gemfile</h3><pre><code class="contenteditable">gem 'twitter-bootstrap-rails'</code></pre><h3>Install TwitterBootstrap</h3><pre><code class="contenteditable">bundle install
+rails g bootstrap:install
+rails g bootstrap:layout application fixed</code></pre></section></section><section><section><h1>Confirm Rspec is installed</h1><h3>Run "rake spec" on the command line</h3></section><section><h3>Install RSpec</h3><pre><code class="contenteditable">rake spec</code></pre><h3>If no error it should be installed.</h3></section></section><section><section><h1>Confirm Cucumber is installed</h1><h3>Run "rake cucumber" on the command line</h3></section><section><h3>Install Cucumber</h3><pre><code class="contenteditable">rake cucumber</code></pre><h3>If no error it should be installed.</h3></section></section><section><section><h1>Confirm Rails Server</h1><h3>Run "rails s" on the command line</h3><h3>open browser to http://localhost:3000</h3><h3>should see rails page</h3></section><section><h3>Run Rails Server</h3><pre><code class="contenteditable">rails s</code></pre><h3>open browser to http://localhost:3000</h3><h3>should see rails page</h3></section></section><section><section><h1>Create Resources</h1><h3>Run "rails g devise User" on the command line</h3><h3>Run "rails g resource Story title url body:text user:references"</h3><h3>Run "rails g resource Comment body:text story:references user:references"</h3></section><section><h3>Create Resources</h3><pre><code class="contenteditable">rails g devise User
+rails g resource Story title url body:text user:references
+rails g resource Comment body:text story:references user:references</code></pre></section></section><section><section><h1>Remove index.html</h1><h3>In the public folder</h3><h3>remove the index.html page</h3></section><section><h3>Remove "public/index.html"</h3><pre><code class="contenteditable">rm public/index.html</code></pre></section></section><section><section><h1>Create Root Route</h1><h3>Map root to "stories#index"</h3></section><section><h3>Edit "config/routes.rb"</h3><pre><code class="contenteditable">root :to => "stories#index"</code></pre></section></section><section><section><h1>Create Story Index View</h1><h3>Create view "index.html.erb"</h3><h3>Add a h1 tag for Hello World</h3></section><section><h3>Edit "app/views/stories/index.html.erb"</h3><pre><code class="contenteditable">&lt;h1&gt;Hello World&lt;/h1></code></pre></section></section><section><section><h1>Edit Layout</h1><h3>Edit layout "application.html.erb"</h3><h3>replace link shortcut images/favicon.ico</h3><h3>with link shortcut /favicon.ico</h3></section><section><h3>Edit "app/views/layouts/application.html.erb"</h3><pre><code class="contenteditable">&lt;link rel="shortcut icon" href="/images/favicon.ico"&gt;</code></pre><h3>with</h3><pre><code class="contenteditable">&lt;link rel="shortcut icon" href="/favicon.ico"&gt;</code></pre></section></section><section><section><h1>Migrate the Database</h1><h3>run "rake db:migrate" on the command-line</h3></section><section><h3>run rake db:migrate</h3><pre><code class="contenteditable">rake db:migrate</code></pre></section></section><section><section><h1>Create Repository</h1><h3>Initialize Git Repository</h3><h3>Run First Commit</h3></section><section><h3>Create and Commit Git Repo</h3><pre><code class="contenteditable">git init
+git add .
+git commit -am "first commit"</code></pre></section></section><section><section><h1>Setup Story Model</h1><h3>Story model has many comments</h3></section><section><h3>Edit "app/models/story.rb"</h3><pre><code class="contenteditable">class Story < ActiveRecord::Base
+  ...
+  has_many :comments
+end</code></pre></section></section><section><section><h1>First Cucumber Feature</h1><pre><code class="contenteditable">Feature: First Feature
 
-    var nodes = document.querySelectorAll( selector );
+Scenario: Valid Cucumber
 
-    for( var i = 0, len = nodes.length; i < len; i++ ) {
-      var node = nodes[i];
+Given I am on the home page
+Then I should see "Hello World"</code></pre></section><section><h3>Edit "features/index.feature"</h3><pre><code class="contenteditable">Feature: First Feature
 
-      if( !node.className ) ) {
-        node.className += ' roll';
-      }
-    };
-  }
-}</code></pre></section></div></div>
+Scenario: Valid Cucumber
+
+Given I am on the home page
+Then I should see "Hello World"</code></pre></section><section><h3>Edit "features/steps_definitions/index_steps.rb"</h3><pre><code class="contenteditable">Given /^I am on the home page$/ do
+  visit '/'
+end
+
+Then /^I should see "(.*?)"$/ do |arg1|
+  page.should have_content(arg1)
+end</code></pre><h3>run cucumber</h3><pre><code class="contenteditable">rake cucumber</code></pre></section></section><section><section><h1>Feature Submit Course</h1><pre><code class="contenteditable">Feature: Submit Course
+
+Scenario: Happy Path
+
+Given I visit "/submit"
+When I fill in "Title" with "Foo Bar"
+When I fill in "Url" with "http://www.google.com"
+When I click "Submit"
+Then I should see "Successfully submitted course"</code></pre></section><section><h3>Edit "features/submit.feature"</h3><pre><code class="contenteditable">Feature: Submit Course
+
+Scenario: Happy Path
+
+Given I visit "/submit"
+When I fill in "Title" with "Foo Bar"
+When I fill in "Url" with "http://www.google.com"
+When I click "Submit"
+Then I should see "Successfully submitted course"</code></pre></section><section><h3>Edit "features/step_definitions/web_steps.rb"</h3><pre><code class="contenteditable">Given /^I visit "(.*?)"$/ do |url|
+  visit url
+end
+
+When /^I fill in "(.*?)" with "(.*?)"$/ do |field, value|
+  fill_in field, with: value
+end
+
+When /^I click "(.*?)"$/ do |text|
+  click_button text
+end</code></pre><h3>run cucumber</h3><pre><code class="contenteditable">rake cucumber</code></pre></section><section><h1>Cucumber should fail...</h1></section></section><section><section><h1>Code Feature Submit Course</h1><ul><li>Add "/submit" route</li><li>Create "stories/new.html.erb" Form</li><li>Create "new" action in Stories Controller</li><li>Create "create" action in Stories Controlller</li><li>Add Flash Notice to Layout</li></ul></section><section><h3>Add "/submit" route</h3><h3>edit "config/routes.rb"</h3><pre><code class="contenteditable">HackerCourses::Application.routes.draw do
+  ...
+  root :to => "stories#index"
+  match '/submit', to: "stories#new"
+  ...
+end</code></pre></section><section><h3>edit "views/stories/new.html.erb"</h3><pre><code class="contenteditable">&lt;h1&gt;Submit Course&lt;/h1>
+&lt;%= form_for @story do |f| %>
+  &lt;fieldset>
+    &lt;%= f.label :title %>
+    &lt;%= f.text_field :title %>
+  &lt;/fieldset>
+  &lt;fieldset>
+    &lt;%= f.label :url %>
+    &lt;%= f.text_field :url %>
+  &lt;/fieldset>
+  &lt;fieldset>
+    &lt;%= f.label :body, 'Text' %>
+    &lt;%= f.text_field :body %>
+  &lt;/fieldset>
+  &lt;%= f.submit "Submit" %>
+&lt;% end %></code></pre></section><section><h3>Create "new" action in Stories Controller</h3><h3>edit "app/controllers/stories_controller.rb"</h3><pre><code class="contenteditable">class StoriesController < ApplicationController
+  ...
+  def new
+    @story = Story.new
+  end
+  ...
+end</code></pre></section><section><h3>Create "create" action in Stories Controller</h3><h3>edit "app/controllers/stories_controller.rb"</h3><pre><code class="contenteditable">class StoriesController < ApplicationController
+  ...
+  def create
+    @story = Story.new(params[:story])
+    respond_to do |format|
+      if @story.save
+        format.html { redirect_to root_path,
+          notice: 'Successfully submitted course' }
+      else
+        format.html { render action: 'new' }
+      end
+    end
+  end
+  ...
+end</code></pre></section><section><h3>edit "app/views/layouts/application.html.erb"</h3><pre><code class="contenteditable"><!DOCTYPE html>
+<html lang="en">
+  ...
+  <body>
+    ...
+    <% if flash[:notice] %>
+      <div class="alert-message info">
+        <%= content_tag :div, flash[:notice] %>
+      </div>
+    <% end %>
+    ...
+  </body>
+</html></code></pre></section><section><h3>run our cucumber test</h3><pre><code class="contenteditable">rake cucumber</code></pre><h3>read errors and debug...</h3></section></section><section><section><h3>Submit Story</h3><h3>Sad Path</h3><pre><code class="contenteditable">Scenario: Sad Path
+
+Given I visit "/submit"
+When I fill in "Title" with "Foo Bar"
+When I click "Submit"
+Then I should not see "Successfully submitted course"</code></pre><h3>press the down arrow to see the steps...</h3></section><section><h1>steps</h1><ul><li>Add scenario to "submit.feature"</li><li>Add step defintion</li><li><p>Add validation to story model</p><p>title should be required</p><p>url or body should required</p></li><li>Create RSpec Test for story model validation</li></ul></section><section><h3>edit "features/submit.feature"</h3><pre><code class="contenteditable">Feature: Submit Course
+...
+Scenario: Sad Path
+
+Given I visit "/submit"
+When I fill in "Title" with "Foo Bar"
+When I click "Submit"
+Then I should not see "Successfully submitted course"
+...</code></pre></section><section><h3>edit "features/step_definitions/web_steps.rb"</h3><pre><code class="contenteditable">...
+Then /^I should not see "(.*?)"$/ do |arg1|
+  page.should_not have_content(arg1)
+end</code></pre></section><section><h3>edit "app/models/story.rb"</h3><pre><code class="contenteditable">class Story < ActiveRecord::Base
+  ...
+  # validations
+  validates :title, :presence => true
+  validates :url, :presence => true, :if => "body.blank?"
+  validates :body, :presence => true, :if => "url.blank?"
+end</code></pre></section><section><h3>edit "spec/models/story_spec.rb"</h3><pre><code class="contenteditable">require 'spec_helper'
+
+describe Story do
+  it 'requires url if no body' do
+    subject.title = 'test'
+    subject.url = 'http://foo.com'
+    subject.body = nil
+    subject.should be_valid
+  end
+
+  it 'requires body if no url' do
+    subject.title = 'test'
+    subject.body = 'foo bar'
+    subject.url = nil
+    subject.should be_valid
+  end
+end  
+</code></pre></section><section><h3>run rspec test</h3><pre><code class="contenteditable">rake spec</code></pre></section><section><h3>commit to git</h3><pre><code class="contenteditable">git add .
+git commit -am "feature submit story"</code></pre></section></section></div><!--The navigational controls UI--><aside class="controls"><a class="left" href="#">&#x25C4;</a><a class="right" href="#">&#x25BA;</a><a class="up" href="#">&#x25B2;</a><a class="down" href="#">&#x25BC;</a></aside><!--Presentation progress bar--><div class="progress"><span></span></div></div>
   <!-- JS
   ================================================== -->
   <script src="js/head.min.js"></script>

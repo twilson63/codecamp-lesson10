@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>slideshow-test</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+  
+  <!-- CSS
+  ================================================== -->
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+
+  <link rel="stylesheet" href="css/zenburn.css">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  ================================================== -->
+  <div class="reveal"><div class="state-background"></div><div class="slides"><section><h1>Exercise 2</h1><img src="http://charlestoncodes.jpg.to" style="padding:20px;" /><script>// Delicously hacky. Look away.
+if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );</script></section><section><section><h1>Feature List Courses</h1><pre><code class="contenteditable">Feature: List Courses by latest
+
+Scenario: Happy Path should list courses
+
+Given I have a course named "Ruby on Rails 101" 
+And I have a course named "NodeJs 101" 
+And I have a course named "JQuery 101"
+When I visit "/latest"
+Then I should see "Ruby on Rails 101"
+And I should see "NodeJs 101"
+And I should see "JQuery 101"</code></pre></section><section><h3>Edit "features/latest.feature"</h3><pre><code class="contenteditable">Feature: List Courses by latest
+
+Scenario: Happy Path should list courses
+
+Given I have a course named "Ruby on Rails 101" 
+And I have a course named "NodeJs 101" 
+And I have a course named "JQuery 101"
+When I visit "/latest"
+Then I should see "Ruby on Rails 101"
+And I should see "NodeJs 101"
+And I should see "JQuery 101"</code></pre></section><section><h3>Edit "features/step_definitions/story_steps.rb"</h3><pre><code class="contenteditable">Given /^I have a course named "(.*?)"$/ do |title|
+  Story.create(title: title, body: 'FooBarBaz')
+end        </code></pre><h3>run cucumber</h3><pre><code class="contenteditable">rake cucumber</code></pre></section><section><h1>Cucumber should fail...</h1></section></section><section><section><h1>Code Feature Latest Course</h1><ul><li>Add "/latest" route</li><li>Create "stories/latest.html.erb" View</li><li>Create "stories/_story.html.erb" Partial</li><li>Add scope to stories model</li><li>Create "story_link" helper</li><li>Add "latest" action to stories controller</li></ul></section><section><h3>Add "/submit" route</h3><h3>edit "config/routes.rb"</h3><pre><code class="contenteditable">HackerCourses::Application.routes.draw do
+  ...
+  match '/submit', to: "stories#submit"
+  match '/latest', to: "stories#latest"
+  ...
+end</code></pre></section><section><h3>edit "views/stories/latest.html.erb"</h3><pre><code class="contenteditable">&lt;h1&gt;Latest Stories&lt;/h1>
+&lt;ul>
+  &lt;%= render @stories %>
+&lt;/ul></code></pre></section><section><h3>edit "views/stories/_story.html.erb"</h3><pre><code class="contenteditable">&lt;li&gt;
+  &lt;%= link_to story.title, story_link(story) %>
+&lt;/li>        </code></pre></section><section><h3>edit "app/helpers/stories_helper.rb"</h3><pre><code class="contenteditable">module StoriesHelper
+  def story_link(story)
+    story.url.blank? ? story_path(story) : story.url
+  end
+end</code></pre></section><section><h3>edit "spec/helpers/stories_helper_spec.rb"</h3><pre><code class="contenteditable">require 'spec_helper'
+describe StoriesHelper do
+  describe 'Story Link' do
+    context 'with url' do
+      let(:story) { Story.create(title: 'foo', url: 'http://foo.com') }
+      it 'should return url' do
+        story_link(story).should == 'http://foo.com'
+      end
+    end
+    context 'with body' do
+      let(:story) { Story.create(title: 'foo', body: 'bar-baz') }
+      it 'should return show path if url is blank' do
+        story_link(story).should == '/stories/1'
+      end
+    end
+  end
+end</code></pre></section><section><h3>edit "spec/models/story_spec.rb"</h3><pre><code class="contenteditable">require 'spec_helper'
+describe Story do
+  it 'requires url if no body' do
+    subject.title = "foo"
+    ...
+  end
+  it 'requires body if no url' do
+    subject.title = "foo"
+    ...
+  end
+  describe '#latest' do
+    before do
+      %w{ Foo Bar Baz }.each do |title|
+        Story.create title: title, body: title
+      end
+    end
+    it 'should return the last 50 stories' do
+      Story.latest.first.title.should == "Baz"
+      Story.latest.last.title.should == "Foo"
+    end
+  end
+end</code></pre></section><section><h3>edit "app/models/story.rb"</h3><pre><code class="contenteditable">class Story < ActiveRecord::Base
+  ...
+  scope :latest, :order => 'created_at desc', :limit => 50
+end</code></pre></section><section><h3>edit "app/controllers/stories_controller.rb"</h3><pre><code class="contenteditable">class StoriesController < ApplicationController
+  ...
+  def latest
+    @stories = Story.latest
+  end
+  ...
+end</code></pre></section><section><h3>run our cucumber test</h3><pre><code class="contenteditable">rake cucumber</code></pre><h3>read errors and debug...</h3></section><section><h3>run rspec test</h3><pre><code class="contenteditable">rake spec</code></pre></section><section><h3>commit to git</h3><pre><code class="contenteditable">git add .
+git commit -am "feature latest story"</code></pre></section></section></div><!--The navigational controls UI--><aside class="controls"><a class="left" href="#">&#x25C4;</a><a class="right" href="#">&#x25BA;</a><a class="up" href="#">&#x25B2;</a><a class="down" href="#">&#x25BC;</a></aside><!--Presentation progress bar--><div class="progress"><span></span></div></div>
+  <!-- JS
+  ================================================== -->
+  <script src="js/head.min.js"></script>
+
+  <script>
+    // Scripts that should be loaded before initializing
+    var scripts = [];
+
+    // If the browser doesn't support classList, load a polyfill
+    if( !document.body.classList ) {
+      scripts.push( 'js/classList.js' );
+    }
+
+    // Load markdown parser if there are slides defined using markdown
+    if( document.querySelector( '[data-markdown]' ) ) {
+      scripts.push( 'js/showdown.js' );
+      scripts.push( 'js/data-markdown.js' );
+    }
+
+    scripts.push( 'js/reveal.js' );
+
+    // Load the scripts and, when completed, initialize reveal.js
+    head.js.apply( null, scripts.concat([function() {
+
+      // Fires when a slide with data-state=customevent is activated
+      Reveal.addEventListener( 'customevent', function() {
+        console.log( '"customevent" has fired' );
+      } );
+
+      // Fires each time a new slide is activated
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+      } );
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        
+        theme: Reveal.getQueryHash().theme || 'default', // default/neon/beige
+        transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/linear(2d)
+      });
+
+    }]));
+    
+    // Load highlight.js for syntax highlighting of code samples
+    head.js( 'js/highlight.js', function() { 
+      hljs.initHighlightingOnLoad(); 
+    } );
+  </script>
+
+<!-- End Document
+================================================== -->
+</body>
+</html>

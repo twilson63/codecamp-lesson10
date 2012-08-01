@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>slideshow-test</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <link rel="shortcut icon" href="/img/favicon.ico">
+  
+  <!-- CSS
+  ================================================== -->
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+
+  <link rel="stylesheet" href="css/zenburn.css">
+
+</head>
+<body>
+  <!-- Primary Page Layout
+  ================================================== -->
+  <div class="reveal"><div class="state-background"></div><div class="slides"><section><h1>Exercise 5</h1><img src="http://charlestoncodes.jpg.to" style="padding:20px;" /><script>// Delicously hacky. Look away.
+if( navigator.userAgent.match( /(iPhone|iPad|iPod|Android)/i ) ) document.write( '<p style="color: rgba(0,0,0,0.3); text-shadow: none;">('+'Tap to navigate'+')</p>' );</script></section><section><section><h3>Feature New Comments</h3><pre><code class="contenteditable">Feature: New Comment
+
+Scenario: Happy Path
+
+Given I have a course named "Rails" 
+And I visit "/latest"
+And I click link "new comment"
+When I fill in "Comment" with "Foo Bar.............................."
+And I click "Submit"
+Then I should see "Successfully submitted comment"
+And I visit "/latest"
+And I should see "comments (1)"</code></pre></section><section><h3>edit "features/comments/new.feature"</h3><pre><code class="contenteditable">Feature: New Comment
+
+Scenario: Happy Path
+
+Given I have a course named "Rails" 
+And I visit "/latest"
+And I click link "new comment"
+When I fill in "Comment" with "Foo Bar.............................."
+And I click "Submit"
+Then I should see "Successfully submitted comment"
+And I visit "/latest"
+And I should see "comments (1)"</code></pre></section><section><h3>config/routes.rb</h3><pre><code class="contenteditable">Chscodes::Application.routes.draw do
+  resources :stories do
+    resources :comments
+  end
+
+  devise_for :users
+  ...
+end</code></pre></section><section><h3>edit "app/views/stories/_story.html.erb"</h3><pre><code class="contenteditable"><li>
+  ...
+  <br />
+  <%= link_to 'new comment', new_story_comment_path(story) %>
+  <%= link_to "comments (#{story.comments.count})", story_path(story) %>
+</li>        </code></pre></section><section><h3>edit "app/views/comments/new.html.erb"</h3><pre><code class="contenteditable"><h1>New Comment for <%= @story.title %></h1>
+<%= form_for [@story, @comment] do |f| %>
+  <fieldset>
+    <%= f.label :body, "Comment" %>
+    <%= f.text_area :body %>
+  </fieldset>
+  <%= f.submit "Submit" %>
+<% end %></code></pre></section><section><h3>edit "app/controllers/comments_controller.rb"</h3><pre><code class="contenteditable">class CommentsController < ApplicationController
+
+  def new
+    @story = Story.find(params[:story_id])
+    @comment = @story.comments.build
+  end
+
+  def create
+    @comment = Story.find(params[:story_id]).comments.build(params[:comment])
+    respond_to do |format|
+      if @comment.save
+        format.html { redirect_to root_path, notice: 'Successfully submitted comment'}
+      else
+        format.html { render 'new' }
+      end
+    end
+  end
+end</code></pre></section><section><h3>run our cucumber test</h3><pre><code class="contenteditable">rake cucumber</code></pre><h3>read errors and debug...</h3></section><section><h3>run rspec test</h3><pre><code class="contenteditable">rake spec</code></pre></section><section><h3>commit to git</h3><pre><code class="contenteditable">git add .
+git commit -am "show story"</code></pre></section></section></div><!--The navigational controls UI--><aside class="controls"><a class="left" href="#">&#x25C4;</a><a class="right" href="#">&#x25BA;</a><a class="up" href="#">&#x25B2;</a><a class="down" href="#">&#x25BC;</a></aside><!--Presentation progress bar--><div class="progress"><span></span></div></div>
+  <!-- JS
+  ================================================== -->
+  <script src="js/head.min.js"></script>
+
+  <script>
+    // Scripts that should be loaded before initializing
+    var scripts = [];
+
+    // If the browser doesn't support classList, load a polyfill
+    if( !document.body.classList ) {
+      scripts.push( 'js/classList.js' );
+    }
+
+    // Load markdown parser if there are slides defined using markdown
+    if( document.querySelector( '[data-markdown]' ) ) {
+      scripts.push( 'js/showdown.js' );
+      scripts.push( 'js/data-markdown.js' );
+    }
+
+    scripts.push( 'js/reveal.js' );
+
+    // Load the scripts and, when completed, initialize reveal.js
+    head.js.apply( null, scripts.concat([function() {
+
+      // Fires when a slide with data-state=customevent is activated
+      Reveal.addEventListener( 'customevent', function() {
+        console.log( '"customevent" has fired' );
+      } );
+
+      // Fires each time a new slide is activated
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+      } );
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        
+        theme: Reveal.getQueryHash().theme || 'default', // default/neon/beige
+        transition: Reveal.getQueryHash().transition || 'default' // default/cube/page/concave/linear(2d)
+      });
+
+    }]));
+    
+    // Load highlight.js for syntax highlighting of code samples
+    head.js( 'js/highlight.js', function() { 
+      hljs.initHighlightingOnLoad(); 
+    } );
+  </script>
+
+<!-- End Document
+================================================== -->
+</body>
+</html>
